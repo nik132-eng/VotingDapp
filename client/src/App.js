@@ -1,5 +1,5 @@
 import { Route, Link } from "react-router-dom";
-import Candidate from "./components/CandidateRegister";
+import CandidateRegister from "./components/CandidateRegister";
 import VoterRegister from "./components/VoterRegister";
 import Winner from "./components/Winner";
 import Vote from "./contracts/Vote.json";
@@ -62,7 +62,7 @@ function App() {
     {/* <Route exact path="/">
         <Intro></Intro>
       </Route> */}
-      <div class="topnav">
+      <div className="topnav">
       <a>
           <Link to="/">Home</Link>
         </a>
@@ -99,7 +99,7 @@ function App() {
       </form>
 
       <Route path="/candidate">
-        <Candidate state={state} account={account}></Candidate>
+        <CandidateRegister state={state} account={account}></CandidateRegister>
       </Route>
       <Route path="/voter">
         <VoterRegister state={state} account={account}></VoterRegister>
