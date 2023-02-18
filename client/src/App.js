@@ -75,7 +75,7 @@ function App() {
         <a>
           <Link to="/electioncommision">Election Commision</Link>
         </a>
-        <a><Winner state={state}></Winner></a>
+        {/* <a><Winner state={state}></Winner></a> */}
 
       </div>
     <div className="maiNcontainer">

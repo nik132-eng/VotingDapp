@@ -1,31 +1,30 @@
-function VoterRegister() {
+import VoterList from "./VoterList";
+import Vote from "./Vote";
 
-  function CandidateRegister({state,account}) {
-    async function register(event){
+function VoterRegister({state,account}) {
+    async function register_voter(event){
       event.preventDefault();
       const {contract} = state;
       const name = document.querySelector("#name").value;
-      const party = document.querySelector("#party").value;
       const age = document.querySelector("#age").value;
       const gender = document.querySelector("#gender").value;
-      console.log(name,party,age,gender);
+      console.log(name,age,gender);
       try{
-        await contract.methods.candidateRegister(name, party, age, gender).send({
+        await contract.methods.voteRegister(name, age, gender).send({
           from: account,
           gas: "1000000",
         });
-        alert("Candidate Registration Is Successful");
-      console.log(state);
+        alert("Voter Registration Is Successful");
+        console.log(state);
         window.location.reload();
       }catch(error){
         alert(error);
       }
     }
-
   return (
     <div>
       <div className="btnContainer">
-        <form className="form" onSubmit>
+        <form className="form" onSubmit={register_voter}>
           <label className="label2" htmlFor="name">
             Name:
           </label>
@@ -45,6 +44,8 @@ function VoterRegister() {
             Register
           </button>
         </form>
+        <Vote state={state} account={account}></Vote>
+        <VoterList state={state}></VoterList>
       </div>
     </div>
   );

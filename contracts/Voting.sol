@@ -48,11 +48,11 @@ contract Vote{
     }
 
     function candidateVerification(address _person) internal view returns(bool) {
-       for(uint i=1;i<nextCandidateId;i++){
-           if(candidateDetails[i].candidateAddress==_person){
-               return false;
-           }
-       }
+        for(uint i=1;i<nextCandidateId;i++){
+            if(candidateDetails[i].candidateAddress==_person){
+                return false;
+            }
+        }
         return true;
     }
 
@@ -85,7 +85,6 @@ contract Vote{
 
     function voterList() external view returns(Voter[] memory){
         Voter[] memory arr = new Voter[](nextVoterId-1);
- 
         for(uint i=1;i<nextVoterId;i++){
             arr[i-1]=voterDetails[i];       
         }
@@ -109,7 +108,7 @@ contract Vote{
         stopVoting=false; 
     }
 
-    function votingStatus() external view returns(string memory){
+    function votingStatus() public view returns(string memory){
         if(startTime==0){
             return "Voting not started";
         }else if((startTime!=0 && endTime>block.timestamp) && stopVoting==false){
@@ -119,7 +118,7 @@ contract Vote{
         }
     }
 
-    function result() public{
+    function result() public returns(address){
         require(electionCommision==msg.sender,"You are not from election commision");
         Candidate[] memory arr = new Candidate[](nextCandidateId-1);
         arr=candidateList(); 
@@ -129,6 +128,7 @@ contract Vote{
         }else{
             winner = arr[1].candidateAddress;
         }
+        return winner;
     }
 
     function emergency() public{

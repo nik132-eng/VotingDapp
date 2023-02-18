@@ -1,8 +1,54 @@
-function ElectionCommision() {
+import Winner from "./Winner";
+
+function ElectionCommision({state, account}) {
+  async function start_end(event){
+    // event.preventDefault();
+    const {contract} = state;
+    const start_time = document.querySelector('#start').value;
+    const end_time = document.querySelector('#end').value;
+    console.log(start_time, end_time);
+
+    try{
+      await contract.methods.voteTime(start_time, end_time).send({
+        from: account,
+        gas:"1000000"
+      });
+
+    }catch(err){
+      alert("Error: " + err);
+    }
+  }
+
+  async function emergency(){
+    const {contract} = state;
+    try{
+      await contract.methods.emergency().send({
+        from: account,
+        gas:"1000000"
+      });
+      alert("emergency called")
+    }catch(err){
+      alert("Error: " + err);
+    }
+  }
+
+  async function result(){
+    const {contract} = state;
+    try{
+      await contract.methods.result().send({
+        from: account,
+        gas:"1000000"
+      });
+      alert("result called");
+    }catch(err){
+      alert("Error: " + err);
+    }
+  }
+
   return (
     <>
       <div>
-        <form className="form" onSubmit>
+        <form className="form" onSubmit={start_end}>
           <label className="label2" htmlFor="start">
             Start Time:
           </label>
@@ -19,13 +65,14 @@ function ElectionCommision() {
         </form>
       </div>
       <div className="space">
-        <button className="emerBtn" onClick>
+        <button className="emerBtn" onClick={emergency}>
           Emergency
         </button>
-        <button className="resBtn" onClick>
+        <button className="resBtn" onClick={result}>
           Result
         </button>
       </div>
+      <Winner state={state} />
     </>
   );
 }
