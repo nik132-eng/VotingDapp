@@ -7,7 +7,11 @@ import Web3 from "web3";
 import { useEffect, useState } from "react";
 import "./App.css";
 import ElectionCommision from "./components/ElectionCommision";
-
+import { Autocomplete, styled, Tab, TextField } from "@mui/material";
+import TabUnstyled, { tabUnstyledClasses } from '@mui/base/TabUnstyled';
+import TabPanelUnstyled, { tabPanelUnstyledClasses } from '@mui/base/TabPanelUnstyled';
+import { tabsListUnstyledClasses, TabsUnstyled } from "@mui/base";
+import TabsListUnstyled from '@mui/base/TabsListUnstyled';
 
 function App() {
   const [state, setState] = useState({
@@ -57,13 +61,58 @@ function App() {
     }
   };
 
+  
+const blue = {
+  50: '#F0F7FF',
+  100: '#C2E0FF',
+  200: '#80BFFF',
+  300: '#66B2FF',
+  400: '#3399FF',
+  500: '#007FFF',
+  600: '#0072E5',
+  700: '#0059B2',
+  800: '#004C99',
+  900: '#003A75',
+};
+
+const grey = {
+  50: '#f6f8fa',
+  100: '#eaeef2',
+  200: '#d0d7de',
+  300: '#afb8c1',
+  400: '#8c959f',
+  500: '#6e7781',
+  600: '#57606a',
+  700: '#424a53',
+  800: '#32383f',
+  900: '#24292f',
+};
+
+const TabPanel = styled(tabPanelUnstyledClasses)`
+width: 100%;
+font-family: IBM Plex Sans, sans-serif;
+font-size: 0.875rem;
+`;
+
+const TabsList = styled(tabsListUnstyledClasses)(
+({ theme }) => `
+min-width: 400px;
+background-color: ${blue[500]};
+border-radius: 12px;
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+align-content: space-between;
+box-shadow: 0px 4px 8px ${theme.palette.mode === 'dark' ? grey[900] : grey[200]};
+`,
+);
+
+
   return (
     <>
-    {/* <Route exact path="/">
-        <Intro></Intro>
-      </Route> */}
       <div className="topnav">
-      <a>
+        <a>
           <Link to="/">Home</Link>
         </a>
         <a>
@@ -75,46 +124,43 @@ function App() {
         <a>
           <Link to="/electioncommision">Election Commision</Link>
         </a>
-        {/* <a><Winner state={state}></Winner></a> */}
-
       </div>
-    <div className="maiNcontainer">
 
-    {/* <Winner state={state}></Winner> */}
-    
 
-      {/* <Route exact path="/">
-        <Intro></Intro>
-      </Route> */}
-      {/* <p className="cat">Please select your account address</p> */}
+      <div className="maiNcontainer">
+        <Link className="ca" underline="hover">
+          Connected Account:  {account}
+        </Link>
+        <form className="label0" id="myForm">
+          <label htmlFor="">Choose an Account</label>
+          <select
+            className="innerBox"
+            id="selectNumber"
+            onChange={selectAccount}
+          >
+            <option></option>
+          </select>
+        </form>
 
-      
-      <p className="ca">Connected Account:{account}</p>
-      
-      <form className="label0" id="myForm">
-        <label htmlFor="">Choose an account</label>
-        <select className="innerBox" id="selectNumber" onChange={selectAccount}>
-          <option></option>
-        </select>
-      </form>
-
-      <Route path="/candidate">
-        <CandidateRegister state={state} account={account}></CandidateRegister>
-      </Route>
-      <Route path="/voter">
-        <VoterRegister state={state} account={account}></VoterRegister>
-      </Route>
-      <Route path="/electioncommision">
-        <ElectionCommision state={state} account={account}></ElectionCommision>
-      </Route>
-
-      {/* <Winner state={state}></Winner> */}
-    </div>
+        <Route path="/candidate">
+          <CandidateRegister
+            state={state}
+            account={account}
+          ></CandidateRegister>
+        </Route>
+        <Route path="/voter">
+          <VoterRegister state={state} account={account}></VoterRegister>
+        </Route>
+        <Route path="/electioncommision">
+          <ElectionCommision
+            state={state}
+            account={account}
+          ></ElectionCommision>
+        </Route>
+        {/* <Winner state={state}></Winner> */}
+      </div>
     </>
   );
 }
 
 export default App;
-//list of all accounts to select from
-// selected account should become the sender
-//list of accounts should be common in all components
