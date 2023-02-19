@@ -17,7 +17,6 @@ function CandidateRegister({ state, account }) {
         from: account,
         gas: "1000000",
       });
-      alert("Candidate Registration Is Successful");
       swal(
         name + ", All the best for elections",
         "Candidate Registration Is Successful",
